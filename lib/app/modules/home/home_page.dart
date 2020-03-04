@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/app/modules/home/Components.dart';
 import 'package:todolist/app/modules/home/profile/profile_widget.dart';
 
-class HomePage extends StatefulWidget {
-  final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage>{
+class HomePage extends StatelessWidget with Components {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +13,13 @@ class _HomePageState extends State<HomePage>{
             children: <Widget>[
               ProfileWidget(),
               Row(
-                children: <Widget>[
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  period(text: "Hoje"),
+                  period(text: "Semana"),
+                  period(text: "Mês"),
                 ],
-              )
+              ),
             ],
           ),
         ),

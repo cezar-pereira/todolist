@@ -9,30 +9,30 @@ part of 'home_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeBase, Store {
-  final _$valueAtom = Atom(name: '_HomeBase.value');
+  final _$periodAtom = Atom(name: '_HomeBase.period');
 
   @override
-  int get value {
-    _$valueAtom.context.enforceReadPolicy(_$valueAtom);
-    _$valueAtom.reportObserved();
-    return super.value;
+  String get period {
+    _$periodAtom.context.enforceReadPolicy(_$periodAtom);
+    _$periodAtom.reportObserved();
+    return super.period;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.context.conditionallyRunInAction(() {
-      super.value = value;
-      _$valueAtom.reportChanged();
-    }, _$valueAtom, name: '${_$valueAtom.name}_set');
+  set period(String value) {
+    _$periodAtom.context.conditionallyRunInAction(() {
+      super.period = value;
+      _$periodAtom.reportChanged();
+    }, _$periodAtom, name: '${_$periodAtom.name}_set');
   }
 
   final _$_HomeBaseActionController = ActionController(name: '_HomeBase');
 
   @override
-  void increment() {
+  dynamic setPeriod(String period) {
     final _$actionInfo = _$_HomeBaseActionController.startAction();
     try {
-      return super.increment();
+      return super.setPeriod(period);
     } finally {
       _$_HomeBaseActionController.endAction(_$actionInfo);
     }
@@ -40,7 +40,7 @@ mixin _$HomeController on _HomeBase, Store {
 
   @override
   String toString() {
-    final string = 'value: ${value.toString()}';
+    final string = 'period: ${period.toString()}';
     return '{$string}';
   }
 }

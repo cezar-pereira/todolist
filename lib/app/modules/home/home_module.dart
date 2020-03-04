@@ -7,6 +7,7 @@ import 'package:todolist/app/modules/home/home_page.dart';
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
+        //CONTROLLERS
         Bind((i) => ProfileController()),
         Bind((i) => HomeController()),
       ];
