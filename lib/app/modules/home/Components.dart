@@ -50,9 +50,10 @@ class Components {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            title,
+            title.toUpperCase(),
             style: TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Arial"),
+                fontSize: 18, fontWeight: FontWeight.bold, fontFamily: "Arial"),
+                maxLines: 2,
           ),
           Text("Tarefas (${amount.toString()})"),
           Expanded(child: Container()),
