@@ -14,7 +14,7 @@ class Components {
             decoration: BoxDecoration(
               border: BorderDirectional(
                 bottom: BorderSide(
-                    width: 2,
+                    width: homeController.period == text ? 3 : 2,
                     color: homeController.period == text
                         ? Colors.black54
                         : Colors.black26),
@@ -28,6 +28,40 @@ class Components {
           onTap: () => homeController.setPeriod(text),
         );
       },
+    );
+  }
+
+  categories(
+      {@required String title, @required IconData icon, @required int amount}) {
+    return Container(
+      margin: EdgeInsets.all(8),
+      padding: EdgeInsets.all(20),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              blurRadius: 3,
+              spreadRadius: 3,
+              color: Colors.black12,
+            )
+          ]),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(
+                fontSize: 20, fontWeight: FontWeight.bold, fontFamily: "Arial"),
+          ),
+          Text("Tarefas (${amount.toString()})"),
+          Expanded(child: Container()),
+          Container(
+            alignment: Alignment.centerRight,
+            child: Icon(icon),
+          )
+        ],
+      ),
     );
   }
 }
