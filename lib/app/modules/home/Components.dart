@@ -4,7 +4,7 @@ import 'package:todolist/app/modules/home/home_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
 
 class Components {
-  HomeController homeController = HomeModule.to.get<HomeController>();
+  final HomeController homeController = HomeModule.to.get<HomeController>();
   period({@required String text}) {
     return Observer(
       builder: (BuildContext context) {
@@ -32,7 +32,7 @@ class Components {
   }
 
   categories(
-      {@required String title, @required IconData icon, @required int amount}) {
+      {@required String name, @required IconData icon, @required int amount}) {
     return Container(
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(20),
@@ -50,7 +50,7 @@ class Components {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            title.toUpperCase(),
+            name.toUpperCase(),
             style: TextStyle(
                 fontSize: 18, fontWeight: FontWeight.bold, fontFamily: "Arial"),
                 maxLines: 2,

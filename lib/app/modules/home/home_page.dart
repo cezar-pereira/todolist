@@ -86,9 +86,16 @@ class HomePage extends StatelessWidget with Components {
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                     crossAxisCount: 2,
-                    children: List.generate(5, (index) {
+                    children: List.generate(homeController.categories.length,
+                        (index) {
+                          print(homeController.categories[index]["tasks"].length);
                       return categories(
-                          title: "Home", icon: Icons.home, amount: 10);
+                        name: homeController.categories[index]["name"],
+                        icon: IconData(
+                            homeController.categories[index]["codePointIcon"],
+                            fontFamily: 'MaterialIcons'),
+                        amount: homeController.categories[index]["tasks"].length,
+                      );
                     }),
                   ),
                 ),
@@ -100,3 +107,4 @@ class HomePage extends StatelessWidget with Components {
     );
   }
 }
+//adicionada classe com codePoint dos icones, criado repository das categorias com lista temporaria para listar na homePage

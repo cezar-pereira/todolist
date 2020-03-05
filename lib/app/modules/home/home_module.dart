@@ -11,7 +11,10 @@ class HomeModule extends ChildModule {
         Bind((i) => HomeRepository()),
         //CONTROLLERS
         Bind((i) => ProfileController()),
-        Bind((i) => HomeController()),
+        Bind((i) => HomeController(i.get<HomeRepository>())),
+        //REPOSITORIES
+        Bind((i) => HomeRepository()),
+
       ];
 
   @override
