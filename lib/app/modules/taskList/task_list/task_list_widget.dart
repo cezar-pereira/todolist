@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:todolist/app/modules/taskList/task_list/components.dart';
 import 'package:todolist/app/shared/models/category.dart';
+import 'package:todolist/app/shared/my_app_bar.dart';
 
 class TaskListWidget extends StatelessWidget with Components {
   final Category category;
@@ -12,7 +13,7 @@ class TaskListWidget extends StatelessWidget with Components {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: MyAppBar(),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

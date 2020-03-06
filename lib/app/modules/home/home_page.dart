@@ -3,25 +3,16 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/Components.dart';
 import 'package:todolist/app/modules/home/home_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
+import 'package:todolist/app/shared/my_app_bar.dart';
 
 class HomePage extends StatelessWidget with Components {
   @override
   Widget build(BuildContext context) {
     HomeController homeController = HomeModule.to.get();
     return Scaffold(
-      appBar: AppBar(
+      appBar: MyAppBar(
         leading: GestureDetector(
           child: Icon(Icons.settings, size: 28),
-        ),
-        title: ShaderMask(
-          shaderCallback: (rect) {
-            return RadialGradient(
-              center: Alignment.bottomCenter,
-              radius: 3,
-              colors: <Color>[Colors.white, Colors.cyan.withOpacity(0.6)],
-            ).createShader(rect);
-          },
-          child: Text("Lembre-me", style: TextStyle(fontSize: 25)),
         ),
         actions: <Widget>[
           Padding(
@@ -96,10 +87,10 @@ class HomePage extends StatelessWidget with Components {
                               homeController.categories[index].codePointIcon,
                               fontFamily: 'MaterialIcons'),
                           amount: homeController.categories[index].tasks.length,
-                        
                         ),
-                        onTap: (){
-                          Modular.to.pushNamed("taskList", arguments: homeController.categories[index]);
+                        onTap: () {
+                          Modular.to.pushNamed("taskList",
+                              arguments: homeController.categories[index]);
                         },
                       );
                     }),
