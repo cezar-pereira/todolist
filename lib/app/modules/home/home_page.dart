@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/Components.dart';
 import 'package:todolist/app/modules/home/home_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
@@ -88,13 +89,18 @@ class HomePage extends StatelessWidget with Components {
                     crossAxisCount: 2,
                     children: List.generate(homeController.categories.length,
                         (index) {
-                          print(homeController.categories[index]["tasks"].length);
-                      return categories(
-                        name: homeController.categories[index]["name"],
-                        icon: IconData(
-                            homeController.categories[index]["codePointIcon"],
-                            fontFamily: 'MaterialIcons'),
-                        amount: homeController.categories[index]["tasks"].length,
+                      return GestureDetector(
+                        child: categories(
+                          name: homeController.categories[index].name,
+                          icon: IconData(
+                              homeController.categories[index].codePointIcon,
+                              fontFamily: 'MaterialIcons'),
+                          amount: homeController.categories[index].tasks.length,
+                        
+                        ),
+                        onTap: (){
+                          Modular.to.pushNamed("taskList", arguments: homeController.categories[index]);
+                        },
                       );
                     }),
                   ),
@@ -107,4 +113,3 @@ class HomePage extends StatelessWidget with Components {
     );
   }
 }
-//adicionada classe com codePoint dos icones, criado repository das categorias com lista temporaria para listar na homePage

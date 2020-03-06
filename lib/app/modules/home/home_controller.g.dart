@@ -26,6 +26,23 @@ mixin _$HomeController on _HomeBase, Store {
     }, _$periodAtom, name: '${_$periodAtom.name}_set');
   }
 
+  final _$categoriesAtom = Atom(name: '_HomeBase.categories');
+
+  @override
+  List<Category> get categories {
+    _$categoriesAtom.context.enforceReadPolicy(_$categoriesAtom);
+    _$categoriesAtom.reportObserved();
+    return super.categories;
+  }
+
+  @override
+  set categories(List<Category> value) {
+    _$categoriesAtom.context.conditionallyRunInAction(() {
+      super.categories = value;
+      _$categoriesAtom.reportChanged();
+    }, _$categoriesAtom, name: '${_$categoriesAtom.name}_set');
+  }
+
   final _$_HomeBaseActionController = ActionController(name: '_HomeBase');
 
   @override
@@ -39,8 +56,19 @@ mixin _$HomeController on _HomeBase, Store {
   }
 
   @override
+  dynamic getCategories() {
+    final _$actionInfo = _$_HomeBaseActionController.startAction();
+    try {
+      return super.getCategories();
+    } finally {
+      _$_HomeBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
-    final string = 'period: ${period.toString()}';
+    final string =
+        'period: ${period.toString()},categories: ${categories.toString()}';
     return '{$string}';
   }
 }
