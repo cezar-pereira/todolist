@@ -6,7 +6,7 @@ import 'package:todolist/app/modules/taskList/task_list/task_list_widget.dart';
 
 main() {
   testWidgets('TaskListWidget has message', (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(TaskListWidget()));
+    await tester.pumpWidget(buildTestableWidget(TaskListWidget(category: null,)));
     final textFinder = find.text('TaskList');
     expect(textFinder, findsOneWidget);
   });

@@ -1,3 +1,4 @@
+import 'package:todolist/app/modules/add_update_task/add_update_task_page.dart';
 import 'package:todolist/app/modules/taskList/task_list/task_list_controller.dart';
 import 'package:todolist/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -16,12 +17,11 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers => [
         Router('/', module: HomeModule()),
-        Router(
-          '/taskList',
-          child: (context, args) => TaskListWidget(
-            category: args.data,
-          ),
-        ),
+        Router('/taskList',
+            child: (context, args) => TaskListWidget( category: args.data)),
+        Router('/addUpdateTask',
+            child: (context, args) =>
+                AddUpdateTaskPage(categoryOrTask: args.data)),
       ];
 
   @override

@@ -1,15 +1,15 @@
 import 'package:mobx/mobx.dart';
-import 'package:todolist/app/modules/home/home_repository.dart';
 import 'package:todolist/app/shared/models/category.dart';
+import 'package:todolist/app/shared/repositories/categories_repository.dart';
 
 part 'home_controller.g.dart';
 
 class HomeController = _HomeBase with _$HomeController;
 
 abstract class _HomeBase with Store {
-  HomeRepository homeRepository;
+  CategoriesRepository categoriesRepository;
 
-  _HomeBase(this.homeRepository) {
+  _HomeBase(this.categoriesRepository) {
     getCategories();
   }
   @observable
@@ -25,6 +25,6 @@ abstract class _HomeBase with Store {
 
   @action
   getCategories() {
-    categories = homeRepository.getCategories();
+    categories = categoriesRepository.getCategories();
   }
 }

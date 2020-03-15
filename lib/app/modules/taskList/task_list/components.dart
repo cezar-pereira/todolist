@@ -52,9 +52,14 @@ class Components {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(task.date),
+                      Text(task.day.toString()),
+                      Text("/"),
+                      Text(task.month.toString()),
                       SizedBox(width: 8),
-                      Text(task.hour),
+                      Text(task.hour.toString()),
+                      Text(":"),
+                      Text(task.minute.toString()),
+                      // Text(task.hour),
                     ],
                   ),
                   Row(
@@ -66,7 +71,7 @@ class Components {
                       ),
                       Expanded(
                         child: Text(
-                          task.title,
+                          task.title.toString(),
                           style: TextStyle(
                               fontSize: 18,
                               decoration: task.done == true

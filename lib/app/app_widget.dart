@@ -7,10 +7,13 @@ class AppWidget extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       navigatorKey: Modular.navigatorKey,
-      title: 'Flutter Slidy',
+      title: 'Lembre-me',
       theme: ThemeData(
         primaryColor: Colors.black,
-  
+        unselectedWidgetColor: Color(0xFF323336),
+        toggleableActiveColor: Color(0xFF323336),
+        accentColor: Color(0xFF323336)
+        
       ),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,
