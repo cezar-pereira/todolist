@@ -12,19 +12,42 @@ abstract class _HomeBase with Store {
   _HomeBase(this.categoriesRepository) {
     getCategories();
   }
+
   @observable
-  String period = "Hoje";
+  int _iconSelected = 59389;
+
+  @observable
+  String _period = "Hoje";
+  @observable
+  String _nameCategory = "";
 
   @observable
   List<Category> categories;
 
   @action
-  setPeriod(String period) {
-    this.period = period;
-  }
+  setPeriod(String value) => this._period = value;
+
+  String get getPeriod => this._period;
+
+
+  @action
+  setNameCategory(String value) => this._nameCategory = value;
+
+  String get getNameCategory => this._nameCategory;
+
+  @action
+  setIconSelected(int value) => this._iconSelected = value;
+
+  int get getIconSelected => this._iconSelected;
 
   @action
   getCategories() {
     categories = categoriesRepository.getCategories();
+  }
+
+  @action
+  save() {
+    print(getNameCategory);
+    print(getIconSelected);
   }
 }

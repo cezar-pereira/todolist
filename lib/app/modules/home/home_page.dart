@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/Components.dart';
 import 'package:todolist/app/modules/home/home_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
+import 'package:todolist/app/shared/list_icons.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
 class HomePage extends StatelessWidget with Components {
@@ -60,7 +62,6 @@ class HomePage extends StatelessWidget with Components {
                             placeholder: "Procurar atividades",
                           ),
                         ),
-
                       ),
                     ],
                   ),
@@ -120,7 +121,9 @@ class HomePage extends StatelessWidget with Components {
               child: Tooltip(
                 message: "Adicionar categoria",
                 child: GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    showDialogAddCategory(context);
+                  },
                   child: Icon(Icons.add, size: 25),
                 ),
               ),
