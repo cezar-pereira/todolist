@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:todolist/app/modules/add_update_task/list_months_days.dart';
 import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
 import 'package:todolist/app/shared/repositories/categories_repository.dart';
@@ -17,9 +18,9 @@ abstract class _AddUpdateTaskBase with Store {
   @observable
   String _title = "";
   @observable
-  String _hour = "0";
+  String _hour = "00";
   @observable
-  String _minutes = "0";
+  String _minutes = "00";
   @observable
   String _day = "0";
   @observable
@@ -35,14 +36,33 @@ abstract class _AddUpdateTaskBase with Store {
 
   @action
   setTitle(String value) => this._title = value;
+
   @action
-  setHour(int value) => this._hour = value.toString();
+  setHour(int value) {
+    if (value < 10)
+      this._hour = "0" + value.toString();
+    else
+      this._hour = value.toString();
+  }
+
   @action
-  setMinutes(int value) => this._minutes = value.toString();
+  setMinutes(int value) {
+    if (value < 10)
+      this._minutes = "0" + value.toString();
+    else
+      this._minutes = value.toString();
+  }
+
   @action
   setDay(int value) => this._day = (value + 1).toString();
   @action
-  setMonth(int value) => this._month = (value + 1).toString();
+  setMonth(int value) {
+    if (value < 10)
+      this._month = "0" + (value + 1).toString();
+    else
+      this._month = (value + 1).toString();
+  }
+
   @action
   setCategory(String value) => this._categorySelected = value;
   @action

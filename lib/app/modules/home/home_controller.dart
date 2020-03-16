@@ -15,7 +15,6 @@ abstract class _HomeBase with Store {
 
   @observable
   int _iconSelected = 59389;
-
   @observable
   String _period = "Hoje";
   @observable
@@ -28,7 +27,6 @@ abstract class _HomeBase with Store {
   setPeriod(String value) => this._period = value;
 
   String get getPeriod => this._period;
-
 
   @action
   setNameCategory(String value) => this._nameCategory = value;
@@ -43,6 +41,12 @@ abstract class _HomeBase with Store {
   @action
   getCategories() {
     categories = categoriesRepository.getCategories();
+  }
+
+  @action
+  fillValuesDefault() {
+    setNameCategory("");
+    setIconSelected(59389);
   }
 
   @action

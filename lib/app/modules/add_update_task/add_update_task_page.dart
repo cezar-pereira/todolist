@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/add_update_task/Components.dart';
 import 'package:todolist/app/modules/add_update_task/add_update_task_controller.dart';
 import 'package:todolist/app/modules/add_update_task/block_date_time.dart';
@@ -12,7 +11,9 @@ import 'package:todolist/app/shared/my_app_bar.dart';
 
 class AddUpdateTaskPage extends StatelessWidget with Components {
   final categoryOrTask;
-  AddUpdateTaskPage({Key key, this.categoryOrTask}) : super(key: key);
+  AddUpdateTaskPage({Key key, this.categoryOrTask}) {
+    fillValues();
+  }
   TextEditingController textControllerName = TextEditingController();
   TextEditingController textControllerDescription = TextEditingController();
 
@@ -23,8 +24,7 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
 
   AddUpdateTaskController addUpdateTaskController = HomeModule.to.get();
 
-  @override
-  Widget build(BuildContext context) {
+  fillValues() {
     if (categoryOrTask.runtimeType == Category
       ..runtimeType) {
       addUpdateTaskController.cleanPage();
@@ -35,7 +35,10 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
       textControllerDescription.text = categoryOrTask.description;
       addUpdateTaskController.fillTask(categoryOrTask);
     }
+  }
 
+  @override
+  Widget build(BuildContext context) {
     List<Map> priorities = [
       {"title": "Prioridade#0", "color": Colors.red},
       {"title": "Prioridade#1", "color": Colors.orange},
@@ -68,9 +71,12 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
                         placeholder: "Nome",
                       ),
                     ),
-                    Text((addUpdateTaskController.getTitle().length < 5) == true
-                        ? 'Nome deve ter mais de 5 caracteres'
-                        : "", style: TextStyle(color: Colors.red),),
+                    Text(
+                      (addUpdateTaskController.getTitle().length < 5) == true
+                          ? 'Nome deve ter pelo menos 5 caracteres'
+                          : "",
+                      style: TextStyle(color: Colors.red),
+                    ),
                     spacingGroups,
                     BlockDateTime(),
                     spacingGroups,
@@ -98,33 +104,35 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
                                   ),
                                 ),
                                 Expanded(
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: List.generate(
-                                        addUpdateTaskController
-                                            .categories.length,
-                                        (index) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              addUpdateTaskController
-                                                  .setCategory(
-                                                      addUpdateTaskController
-                                                          .categories[index]
-                                                          .name);
-                                            },
-                                            child: buildItemCategory(
-                                              colorSelected: addUpdateTaskController
-                                                          .getCategorySelected() ==
-                                                      addUpdateTaskController
-                                                          .categories[index]
-                                                          .name
-                                                  ? Colors.cyan
-                                                  : Colors.transparent,
-                                              title: addUpdateTaskController
-                                                  .categories[index].name,
-                                            ),
-                                          );
-                                        },
+                                  child: Scrollbar(
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        children: List.generate(
+                                          addUpdateTaskController
+                                              .categories.length,
+                                          (index) {
+                                            return GestureDetector(
+                                              onTap: () {
+                                                addUpdateTaskController
+                                                    .setCategory(
+                                                        addUpdateTaskController
+                                                            .categories[index]
+                                                            .name);
+                                              },
+                                              child: buildItemCategory(
+                                                colorSelected: addUpdateTaskController
+                                                            .getCategorySelected() ==
+                                                        addUpdateTaskController
+                                                            .categories[index]
+                                                            .name
+                                                    ? Colors.cyan
+                                                    : Colors.transparent,
+                                                title: addUpdateTaskController
+                                                    .categories[index].name,
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -178,6 +186,7 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
                         ),
                         SizedBox(height: 8),
                         CupertinoTextField(
+                          keyboardType: TextInputType.text,
                           onChanged: (value) =>
                               addUpdateTaskController.setDescription(value),
                           placeholder: "Descrição",
@@ -207,10 +216,10 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
         width: MediaQuery.of(context).size.width,
         child: GestureDetector(
           onTap: () {
+            if (textControllerName.text.length >= 5) {
             addUpdateTaskController.save();
-            textControllerName.clear();
-            textControllerDescription.clear();
-            Modular.to.pop();
+            // Modular.to.pop();
+            }
           },
           child: Text(
             "ADICIONAR",

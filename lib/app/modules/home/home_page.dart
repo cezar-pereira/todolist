@@ -1,21 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/home/Components.dart';
 import 'package:todolist/app/modules/home/home_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
-import 'package:todolist/app/shared/list_icons.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
+enum settingsOptions { Sair }
+
 class HomePage extends StatelessWidget with Components {
+  HomeController homeController = HomeModule.to.get();
+  
   @override
   Widget build(BuildContext context) {
-    HomeController homeController = HomeModule.to.get();
     return Scaffold(
       appBar: MyAppBar(
-        leading: GestureDetector(
+        leading: PopupMenuButton<settingsOptions>(
           child: Icon(Icons.settings, size: 28),
+          onSelected: (settingsOptions result) {
+            print("sair");
+          },
+          itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<settingsOptions>>[
+            const PopupMenuItem<settingsOptions>(
+              value: settingsOptions.Sair,
+              child: Text("Sair"),
+            ),
+          ],
         ),
         actions: <Widget>[
           Padding(

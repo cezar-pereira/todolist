@@ -5,7 +5,7 @@ class CategoriesRepository {
   List categories = [
     {
       "id": "01",
-      "name": "Teste",
+      "name": "Pessoal",
       "codePointIcon": 59389,
       "tasks": [
         {
@@ -17,7 +17,7 @@ class CategoriesRepository {
           "month": "12",
           "category": "Teste",
           "importance": 0,
-          "description": "Descrição da tarefa",
+          "description": null,
           "done": true,
         },
         {
@@ -96,8 +96,8 @@ class CategoriesRepository {
     },
     {
       "id": "02",
-      "name": "Teste2",
-      "codePointIcon": 59517,
+      "name": "Casa",
+      "codePointIcon": 59530,
       "tasks": [
         {
           "id": "8",
@@ -115,8 +115,8 @@ class CategoriesRepository {
     },
     {
       "id": "03",
-      "name": "Teste3",
-      "codePointIcon": 57895,
+      "name": "Escola",
+      "codePointIcon": 59404,
       "tasks": [
         {
           "id": "9",
@@ -134,8 +134,8 @@ class CategoriesRepository {
     },
     {
       "id": "04",
-      "name": "Teste4",
-      "codePointIcon": 58712,
+      "name": "Trabalho",
+      "codePointIcon": 59641,
       "tasks": [
         {
           "id": "10",
@@ -153,8 +153,8 @@ class CategoriesRepository {
     },
     {
       "id": "05",
-      "name": "Teste4",
-      "codePointIcon": 58712,
+      "name": "Academia",
+      "codePointIcon": 60227,
       "tasks": [
         {
           "id": "10",
@@ -165,7 +165,7 @@ class CategoriesRepository {
           "month": "12",
           "category": "Teste4",
           "importance": 0,
-          "description": "Descrição da tarefa",
+          "description": null,
           "done": true,
         }
       ]

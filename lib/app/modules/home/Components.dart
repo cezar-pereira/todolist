@@ -70,6 +70,7 @@ class Components {
   }
 
   Future<void> showDialogAddCategory(context) async {
+    homeController.fillValuesDefault();
     return showDialog<void>(
       context: context,
       barrierDismissible: true,

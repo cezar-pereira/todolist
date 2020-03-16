@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todolist/app/modules/add_update_task/list_months_days.dart';
 import 'package:todolist/app/shared/models/task.dart';
 
 class Components {
@@ -52,14 +53,13 @@ class Components {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(task.day.toString()),
+                      Text(task.day),
                       Text("/"),
-                      Text(task.month.toString()),
+                      Text(task.month),
                       SizedBox(width: 8),
-                      Text(task.hour.toString()),
+                      Text(task.hour),
                       Text(":"),
-                      Text(task.minute.toString()),
-                      // Text(task.hour),
+                      Text(task.minute),
                     ],
                   ),
                   Row(

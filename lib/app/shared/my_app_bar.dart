@@ -12,7 +12,7 @@ class MyAppBar extends AppBar {
                   colors: <Color>[Colors.white, Colors.cyan.withOpacity(0.6)],
                 ).createShader(rect);
               },
-              child: Text("Lembre-me", style: TextStyle(fontSize: 25)),
+              child: Text("Remember", style: TextStyle(fontSize: 25)),
             ),
             leading: leading,
             actions: actions);

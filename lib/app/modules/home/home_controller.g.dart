@@ -120,6 +120,16 @@ mixin _$HomeController on _HomeBase, Store {
   }
 
   @override
+  dynamic fillValuesDefault() {
+    final _$actionInfo = _$_HomeBaseActionController.startAction();
+    try {
+      return super.fillValuesDefault();
+    } finally {
+      _$_HomeBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic save() {
     final _$actionInfo = _$_HomeBaseActionController.startAction();
     try {
