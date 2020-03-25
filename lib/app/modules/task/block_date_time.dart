@@ -7,8 +7,6 @@ import 'package:todolist/app/modules/task/list_months_days.dart';
 import 'package:todolist/app/modules/task/task_controller.dart';
 
 class BlockDateTime extends StatelessWidget {
-
-
   final TaskController taskController = HomeModule.to.get();
   final TextStyle textStyle =
       TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.65));
@@ -101,9 +99,7 @@ class BlockDateTime extends StatelessWidget {
                               type: "day",
                               length: DateTime(
                                       DateTime.now().year,
-                                      int.parse(taskController
-                                              .getMonth()) +
-                                          1,
+                                      int.parse(taskController.getMonth()) + 1,
                                       0)
                                   .day,
                             ),

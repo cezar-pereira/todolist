@@ -164,6 +164,23 @@ mixin _$TaskController on _TaskBase, Store {
     }, _$_descriptionAtom, name: '${_$_descriptionAtom.name}_set');
   }
 
+  final _$_messageErrorAtom = Atom(name: '_TaskBase._messageError');
+
+  @override
+  String get _messageError {
+    _$_messageErrorAtom.context.enforceReadPolicy(_$_messageErrorAtom);
+    _$_messageErrorAtom.reportObserved();
+    return super._messageError;
+  }
+
+  @override
+  set _messageError(String value) {
+    _$_messageErrorAtom.context.conditionallyRunInAction(() {
+      super._messageError = value;
+      _$_messageErrorAtom.reportChanged();
+    }, _$_messageErrorAtom, name: '${_$_messageErrorAtom.name}_set');
+  }
+
   final _$_TaskBaseActionController = ActionController(name: '_TaskBase');
 
   @override
@@ -241,6 +258,16 @@ mixin _$TaskController on _TaskBase, Store {
     final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setDescription(value);
+    } finally {
+      _$_TaskBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic setMessageError(String value) {
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
+    try {
+      return super.setMessageError(value);
     } finally {
       _$_TaskBaseActionController.endAction(_$actionInfo);
     }

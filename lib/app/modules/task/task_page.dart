@@ -11,13 +11,14 @@ import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
-class TaskPage extends StatelessWidget with ComponentsTask{
+class TaskPage extends StatelessWidget with ComponentsTask {
   final categoryOrTask;
   TaskPage({Key key, this.categoryOrTask}) {
     fillValues();
   }
   final TextEditingController textControllerName = TextEditingController();
-  final TextEditingController textControllerDescription = TextEditingController();
+  final TextEditingController textControllerDescription =
+      TextEditingController();
 
   final SizedBox spacingGroups = SizedBox(height: 24);
 
@@ -50,7 +51,6 @@ class TaskPage extends StatelessWidget with ComponentsTask{
     return Scaffold(
       appBar: MyAppBar(),
       body: SafeArea(
-        
         child: Observer(
           builder: (context) {
             return SingleChildScrollView(
@@ -69,18 +69,17 @@ class TaskPage extends StatelessWidget with ComponentsTask{
                       height: 40,
                       child: CupertinoTextField(
                         controller: textControllerName,
-                        onChanged: (value) =>
-                            taskController.setTitle(value),
+                        onChanged: (value) {
+                          taskController.setTitle(value);
+                          taskController.setMessageError("");
+                        },
                         placeholder: "Nome",
                       ),
                     ),
                     Text(
-                      (taskController.getTitle().length < 5) == true
-                          ? 'Nome deve ter pelo menos 5 caracteres'
-                          : "",
+                      taskController.getMessageError,
                       style: TextStyle(color: Colors.red),
                     ),
-                    
                     spacingGroups,
                     BlockDateTime(),
                     spacingGroups,
@@ -112,24 +111,35 @@ class TaskPage extends StatelessWidget with ComponentsTask{
                                     child: SingleChildScrollView(
                                       child: Column(
                                         children: List.generate(
-                                          Modular.get<CategoryController>().categories.value.length,
+                                          Modular.get<CategoryController>()
+                                              .categories
+                                              .value
+                                              .length,
                                           (index) {
                                             return GestureDetector(
                                               onTap: () {
-                                                taskController
-                                                    .setCategory(
-                                                        Modular.get<CategoryController>().categories.value[index]
-                                                            .name);
+                                                taskController.setCategory(
+                                                    Modular.get<
+                                                            CategoryController>()
+                                                        .categories
+                                                        .value[index]
+                                                        .name);
                                               },
                                               child: buildItemCategory(
                                                 colorSelected: taskController
                                                             .getCategorySelected() ==
-                                                        Modular.get<CategoryController>().categories.value[index]
+                                                        Modular.get<
+                                                                CategoryController>()
+                                                            .categories
+                                                            .value[index]
                                                             .name
                                                     ? Colors.cyan
                                                     : Colors.transparent,
-                                                title: Modular.get<CategoryController>()
-                                                    .categories.value[index].name,
+                                                title: Modular.get<
+                                                        CategoryController>()
+                                                    .categories
+                                                    .value[index]
+                                                    .name,
                                               ),
                                             );
                                           },
@@ -157,8 +167,7 @@ class TaskPage extends StatelessWidget with ComponentsTask{
                                       (index) {
                                         return GestureDetector(
                                           onTap: () {
-                                            taskController
-                                                .setImportance(index);
+                                            taskController.setImportance(index);
                                           },
                                           child: buildItemPriority(
                                               title: priorities[index]["title"],
@@ -217,6 +226,11 @@ class TaskPage extends StatelessWidget with ComponentsTask{
         width: MediaQuery.of(context).size.width,
         child: GestureDetector(
           onTap: () {
+            if (taskController.getTitle.length >= 5) {
+            } else {
+              taskController
+                  .setMessageError("Nome deve ter pelo menos 5 caracteres");
+            }
             // Modular.to
             // if (textControllerName.text.length >= 5) {
             // taskController.save();

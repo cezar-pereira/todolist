@@ -6,7 +6,7 @@ part 'task_controller.g.dart';
 class TaskController = _TaskBase with _$TaskController;
 
 abstract class _TaskBase with Store {
-   @observable
+  @observable
   String _title = "";
   @observable
   String _hour = "00";
@@ -24,6 +24,9 @@ abstract class _TaskBase with Store {
   int _importanceSelected = 2;
   @observable
   String _description = "";
+
+  @observable
+  String _messageError = "";
 
   @action
   setTitle(String value) => this._title = value;
@@ -61,7 +64,7 @@ abstract class _TaskBase with Store {
   @action
   setDescription(String value) => this._description = value;
 
-  getTitle() => this._title;
+  String get getTitle => this._title;
   getImportanceSelected() => this._importanceSelected;
   getCategorySelected() => this._category;
 
@@ -69,6 +72,10 @@ abstract class _TaskBase with Store {
   getMinutes() => this._minutes;
   getDay() => this._day;
   getMonth() => this._month;
+
+  @action
+  setMessageError(String value) => this._messageError = value;
+  String get getMessageError => this._messageError;
 
   @action
   fillTask(Task task) {
@@ -92,6 +99,7 @@ abstract class _TaskBase with Store {
     this._month = (DateTime.now().month).toString();
     this.setImportance(2);
     this._description = "";
+    this._messageError = "";
   }
 
   @action

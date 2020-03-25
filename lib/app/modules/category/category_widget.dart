@@ -9,7 +9,7 @@ import 'package:todolist/app/shared/list_icons.dart';
 import 'package:todolist/app/shared/models/category.dart';
 
 class CategoryWidget {
-   TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
   CategoryController categoryController = AppModule.to.get();
 
   show(context, {Category category}) {
@@ -36,8 +36,10 @@ class CategoryWidget {
                     SizedBox(height: 8),
                     CupertinoTextField(
                       controller: controller,
-                      onChanged: (value) =>
-                          categoryController.setNameCategory(value),
+                      onChanged: (value) {
+                        categoryController.setNameCategory(value);
+                        categoryController.setMessageError("");
+                      },
                       maxLength: 30,
                     ),
                     Text(
@@ -58,8 +60,7 @@ class CategoryWidget {
                                     ListIcons.listIcons[index]);
                               },
                               child: Container(
-                                color: categoryController
-                                            .getIconSelected ==
+                                color: categoryController.getIconSelected ==
                                         ListIcons.listIcons[index]
                                     ? Colors.black38
                                     : Colors.transparent,
@@ -78,16 +79,13 @@ class CategoryWidget {
                 FlatButton(
                   child: Text('Confirmar'),
                   onPressed: () async {
-                    if (categoryController.getNameCategory.length >=
-                        3) {
+                    if (categoryController.getNameCategory.length >= 3) {
                       BotToast.showLoading();
                       bool result;
                       if (category == null) {
-                        result =
-                            await categoryController.addCategory();
+                        result = await categoryController.addCategory();
                       } else {
-                        result =
-                            await categoryController.updateCategory();
+                        result = await categoryController.updateCategory();
                       }
 
                       if (result) {
@@ -116,5 +114,4 @@ class CategoryWidget {
       },
     );
   }
-
 }
