@@ -1,8 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/app/modules/add_update_task/list_months_days.dart';
 import 'package:todolist/app/shared/models/task.dart';
 
-class Components {
+class ComponentsTaskList {
   itemTask({@required Task task}) {
     Color color;
 
@@ -59,7 +59,7 @@ class Components {
                       SizedBox(width: 8),
                       Text(task.hour),
                       Text(":"),
-                      Text(task.minute),
+                      Text(task.minutes),
                     ],
                   ),
                   Row(

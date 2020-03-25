@@ -1,28 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/add_update_task/Components.dart';
 import 'package:todolist/app/modules/add_update_task/add_update_task_controller.dart';
 import 'package:todolist/app/modules/add_update_task/block_date_time.dart';
+import 'package:todolist/app/modules/category/category_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
 import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
-class AddUpdateTaskPage extends StatelessWidget with Components {
+class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
   final categoryOrTask;
   AddUpdateTaskPage({Key key, this.categoryOrTask}) {
     fillValues();
   }
-  TextEditingController textControllerName = TextEditingController();
-  TextEditingController textControllerDescription = TextEditingController();
+  final TextEditingController textControllerName = TextEditingController();
+  final TextEditingController textControllerDescription = TextEditingController();
 
-  SizedBox spacingGroups = SizedBox(height: 24);
+  final SizedBox spacingGroups = SizedBox(height: 24);
 
-  TextStyle textStyle =
+  final TextStyle textStyle =
       TextStyle(fontSize: 18, color: Colors.black.withOpacity(0.65));
 
-  AddUpdateTaskController addUpdateTaskController = HomeModule.to.get();
+  final AddUpdateTaskController addUpdateTaskController = HomeModule.to.get();
 
   fillValues() {
     if (categoryOrTask.runtimeType == Category
@@ -48,6 +50,7 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
     return Scaffold(
       appBar: MyAppBar(),
       body: SafeArea(
+        
         child: Observer(
           builder: (context) {
             return SingleChildScrollView(
@@ -77,6 +80,7 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
                           : "",
                       style: TextStyle(color: Colors.red),
                     ),
+                    
                     spacingGroups,
                     BlockDateTime(),
                     spacingGroups,
@@ -108,27 +112,24 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
                                     child: SingleChildScrollView(
                                       child: Column(
                                         children: List.generate(
-                                          addUpdateTaskController
-                                              .categories.length,
+                                          Modular.get<CategoryController>().categories.value.length,
                                           (index) {
                                             return GestureDetector(
                                               onTap: () {
                                                 addUpdateTaskController
                                                     .setCategory(
-                                                        addUpdateTaskController
-                                                            .categories[index]
+                                                        Modular.get<CategoryController>().categories.value[index]
                                                             .name);
                                               },
                                               child: buildItemCategory(
                                                 colorSelected: addUpdateTaskController
                                                             .getCategorySelected() ==
-                                                        addUpdateTaskController
-                                                            .categories[index]
+                                                        Modular.get<CategoryController>().categories.value[index]
                                                             .name
                                                     ? Colors.cyan
                                                     : Colors.transparent,
-                                                title: addUpdateTaskController
-                                                    .categories[index].name,
+                                                title: Modular.get<CategoryController>()
+                                                    .categories.value[index].name,
                                               ),
                                             );
                                           },
@@ -216,10 +217,10 @@ class AddUpdateTaskPage extends StatelessWidget with Components {
         width: MediaQuery.of(context).size.width,
         child: GestureDetector(
           onTap: () {
-            if (textControllerName.text.length >= 5) {
-            addUpdateTaskController.save();
-            // Modular.to.pop();
-            }
+            // Modular.to
+            // if (textControllerName.text.length >= 5) {
+            // addUpdateTaskController.save();
+            // }
           },
           child: Text(
             "ADICIONAR",

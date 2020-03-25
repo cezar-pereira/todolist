@@ -1,8 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:todolist/app/modules/add_update_task/list_months_days.dart';
-import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
-import 'package:todolist/app/shared/repositories/categories_repository.dart';
 
 part 'add_update_task_controller.g.dart';
 
@@ -10,11 +7,6 @@ class AddUpdateTaskController = _AddUpdateTaskBase
     with _$AddUpdateTaskController;
 
 abstract class _AddUpdateTaskBase with Store {
-  CategoriesRepository categoriesRepository;
-  _AddUpdateTaskBase(this.categoriesRepository) {
-    getCategories();
-  }
-
   @observable
   String _title = "";
   @observable
@@ -26,13 +18,13 @@ abstract class _AddUpdateTaskBase with Store {
   @observable
   String _month = "0";
   @observable
-  String _categorySelected;
+  String _category;
+  @observable
+  String _categoryId;
   @observable
   int _importanceSelected = 2;
   @observable
   String _description = "";
-  @observable
-  List<Category> categories;
 
   @action
   setTitle(String value) => this._title = value;
@@ -64,16 +56,15 @@ abstract class _AddUpdateTaskBase with Store {
   }
 
   @action
-  setCategory(String value) => this._categorySelected = value;
+  setCategory(String value) => this._category = value;
   @action
   setImportance(int value) => this._importanceSelected = value;
   @action
   setDescription(String value) => this._description = value;
 
   getTitle() => this._title;
-  getCategories() => categories = categoriesRepository.getCategories();
   getImportanceSelected() => this._importanceSelected;
-  getCategorySelected() => this._categorySelected;
+  getCategorySelected() => this._category;
 
   getHour() => this._hour;
   getMinutes() => this._minutes;
@@ -84,10 +75,11 @@ abstract class _AddUpdateTaskBase with Store {
   fillTask(Task task) {
     this._title = task.title;
     this._hour = task.hour;
-    this._minutes = task.minute;
+    this._minutes = task.minutes;
     this._day = task.day;
     this._month = task.month;
-    this._categorySelected = task.category;
+    this._category = task.category;
+    this._categoryId = task.categoryId;
     this._importanceSelected = task.importance;
     this._description = task.description;
   }
@@ -107,16 +99,17 @@ abstract class _AddUpdateTaskBase with Store {
   save() {
     Task task = Task(
         hour: this._hour,
-        minute: this._minutes,
+        minutes: this._minutes,
         day: this._day,
         month: this._month,
         category: getCategorySelected(),
+        categoryId: this._categoryId,
         importance: getImportanceSelected(),
         description: this._description,
         title: this._title);
     print("Título: ${task.title}");
     print("Hora: ${task.hour}");
-    print("Minutos: ${task.minute}");
+    print("Minutos: ${task.minutes}");
     print("Dia: ${task.day}");
     print("Mês: ${task.month}");
     print("Categoria: ${task.category}");

@@ -94,22 +94,38 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_monthAtom, name: '${_$_monthAtom.name}_set');
   }
 
-  final _$_categorySelectedAtom =
-      Atom(name: '_AddUpdateTaskBase._categorySelected');
+  final _$_categoryAtom = Atom(name: '_AddUpdateTaskBase._category');
 
   @override
-  String get _categorySelected {
-    _$_categorySelectedAtom.context.enforceReadPolicy(_$_categorySelectedAtom);
-    _$_categorySelectedAtom.reportObserved();
-    return super._categorySelected;
+  String get _category {
+    _$_categoryAtom.context.enforceReadPolicy(_$_categoryAtom);
+    _$_categoryAtom.reportObserved();
+    return super._category;
   }
 
   @override
-  set _categorySelected(String value) {
-    _$_categorySelectedAtom.context.conditionallyRunInAction(() {
-      super._categorySelected = value;
-      _$_categorySelectedAtom.reportChanged();
-    }, _$_categorySelectedAtom, name: '${_$_categorySelectedAtom.name}_set');
+  set _category(String value) {
+    _$_categoryAtom.context.conditionallyRunInAction(() {
+      super._category = value;
+      _$_categoryAtom.reportChanged();
+    }, _$_categoryAtom, name: '${_$_categoryAtom.name}_set');
+  }
+
+  final _$_categoryIdAtom = Atom(name: '_AddUpdateTaskBase._categoryId');
+
+  @override
+  String get _categoryId {
+    _$_categoryIdAtom.context.enforceReadPolicy(_$_categoryIdAtom);
+    _$_categoryIdAtom.reportObserved();
+    return super._categoryId;
+  }
+
+  @override
+  set _categoryId(String value) {
+    _$_categoryIdAtom.context.conditionallyRunInAction(() {
+      super._categoryId = value;
+      _$_categoryIdAtom.reportChanged();
+    }, _$_categoryIdAtom, name: '${_$_categoryIdAtom.name}_set');
   }
 
   final _$_importanceSelectedAtom =
@@ -147,23 +163,6 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
       super._description = value;
       _$_descriptionAtom.reportChanged();
     }, _$_descriptionAtom, name: '${_$_descriptionAtom.name}_set');
-  }
-
-  final _$categoriesAtom = Atom(name: '_AddUpdateTaskBase.categories');
-
-  @override
-  List<Category> get categories {
-    _$categoriesAtom.context.enforceReadPolicy(_$categoriesAtom);
-    _$categoriesAtom.reportObserved();
-    return super.categories;
-  }
-
-  @override
-  set categories(List<Category> value) {
-    _$categoriesAtom.context.conditionallyRunInAction(() {
-      super.categories = value;
-      _$categoriesAtom.reportChanged();
-    }, _$categoriesAtom, name: '${_$categoriesAtom.name}_set');
   }
 
   final _$_AddUpdateTaskBaseActionController =
@@ -281,7 +280,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
 
   @override
   String toString() {
-    final string = 'categories: ${categories.toString()}';
+    final string = '';
     return '{$string}';
   }
 }

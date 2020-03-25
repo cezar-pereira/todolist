@@ -4,10 +4,11 @@ class Task {
   final String id;
   final String title;
   final String hour;
-  final String minute;
+  final String minutes;
   final String day;
   final String month;
   final String category;
+  final String categoryId;
   final int importance;
   final String description;
   final bool done;
@@ -16,10 +17,11 @@ class Task {
     this.id,
     this.title,
     this.hour,
-    this.minute,
+    this.minutes,
     this.day,
     this.month,
     this.category,
+    this.categoryId,
     this.importance,
     this.description,
     this.done = false,
@@ -29,11 +31,12 @@ class Task {
     String id,
     String title,
     String hour,
-    String minute,
+    String minutes,
     String day,
     String month,
     String category,
-    String importance,
+    String categoryId,
+    int importance,
     String description,
     bool done,
   }) =>
@@ -41,10 +44,11 @@ class Task {
         id: id ?? this.id,
         title: title ?? this.title,
         hour: hour ?? this.hour,
-        minute: minute ?? this.minute,
+        minutes: minutes ?? this.minutes,
         day: day ?? this.day,
         month: month ?? this.month,
         category: category ?? this.category,
+        categoryId: categoryId ?? this.categoryId,
         importance: importance ?? this.importance,
         description: description ?? this.description,
         done: done ?? this.done,
@@ -58,10 +62,11 @@ class Task {
         id: json["id"],
         title: json["title"],
         hour: json["hour"],
-        minute: json["minute"],
+        minutes: json["minutes"],
         day: json["day"],
         month: json["month"],
         category: json["category"],
+        categoryId: json["category_id"],
         importance: json["importance"],
         description: json["description"],
         done: json["done"],
@@ -71,10 +76,11 @@ class Task {
         "id": id,
         "title": title,
         "hour": hour,
-        "minute": minute,
+        "minutes": minutes,
         "day": day,
         "month": month,
         "category": category,
+        "category_id": categoryId,
         "importance": importance,
         "description": description,
         "done": done,

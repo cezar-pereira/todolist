@@ -19,6 +19,8 @@ scripts:
   mobx: flutter pub run build_runner watch --delete-conflicting-outputs
   
 dependencies:
+  bot_toast: ^2.3.0
+  hasura_connect: ^1.1.1
   dio: ^3.0.9
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2+2
