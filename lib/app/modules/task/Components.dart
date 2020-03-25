@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ComponentsAddUpdateTask {
+class ComponentsTask {
   Widget buildItemPriority(
       {@required String title,
       @required Color color,

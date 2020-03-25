@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'add_update_task_controller.dart';
+part of 'task_controller.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'add_update_task_controller.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
-  final _$_titleAtom = Atom(name: '_AddUpdateTaskBase._title');
+mixin _$TaskController on _TaskBase, Store {
+  final _$_titleAtom = Atom(name: '_TaskBase._title');
 
   @override
   String get _title {
@@ -26,7 +26,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_titleAtom, name: '${_$_titleAtom.name}_set');
   }
 
-  final _$_hourAtom = Atom(name: '_AddUpdateTaskBase._hour');
+  final _$_hourAtom = Atom(name: '_TaskBase._hour');
 
   @override
   String get _hour {
@@ -43,7 +43,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_hourAtom, name: '${_$_hourAtom.name}_set');
   }
 
-  final _$_minutesAtom = Atom(name: '_AddUpdateTaskBase._minutes');
+  final _$_minutesAtom = Atom(name: '_TaskBase._minutes');
 
   @override
   String get _minutes {
@@ -60,7 +60,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_minutesAtom, name: '${_$_minutesAtom.name}_set');
   }
 
-  final _$_dayAtom = Atom(name: '_AddUpdateTaskBase._day');
+  final _$_dayAtom = Atom(name: '_TaskBase._day');
 
   @override
   String get _day {
@@ -77,7 +77,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_dayAtom, name: '${_$_dayAtom.name}_set');
   }
 
-  final _$_monthAtom = Atom(name: '_AddUpdateTaskBase._month');
+  final _$_monthAtom = Atom(name: '_TaskBase._month');
 
   @override
   String get _month {
@@ -94,7 +94,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_monthAtom, name: '${_$_monthAtom.name}_set');
   }
 
-  final _$_categoryAtom = Atom(name: '_AddUpdateTaskBase._category');
+  final _$_categoryAtom = Atom(name: '_TaskBase._category');
 
   @override
   String get _category {
@@ -111,7 +111,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_categoryAtom, name: '${_$_categoryAtom.name}_set');
   }
 
-  final _$_categoryIdAtom = Atom(name: '_AddUpdateTaskBase._categoryId');
+  final _$_categoryIdAtom = Atom(name: '_TaskBase._categoryId');
 
   @override
   String get _categoryId {
@@ -128,8 +128,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_categoryIdAtom, name: '${_$_categoryIdAtom.name}_set');
   }
 
-  final _$_importanceSelectedAtom =
-      Atom(name: '_AddUpdateTaskBase._importanceSelected');
+  final _$_importanceSelectedAtom = Atom(name: '_TaskBase._importanceSelected');
 
   @override
   int get _importanceSelected {
@@ -148,7 +147,7 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
         name: '${_$_importanceSelectedAtom.name}_set');
   }
 
-  final _$_descriptionAtom = Atom(name: '_AddUpdateTaskBase._description');
+  final _$_descriptionAtom = Atom(name: '_TaskBase._description');
 
   @override
   String get _description {
@@ -165,116 +164,115 @@ mixin _$AddUpdateTaskController on _AddUpdateTaskBase, Store {
     }, _$_descriptionAtom, name: '${_$_descriptionAtom.name}_set');
   }
 
-  final _$_AddUpdateTaskBaseActionController =
-      ActionController(name: '_AddUpdateTaskBase');
+  final _$_TaskBaseActionController = ActionController(name: '_TaskBase');
 
   @override
   dynamic setTitle(String value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setTitle(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setHour(int value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setHour(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setMinutes(int value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setMinutes(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setDay(int value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setDay(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setMonth(int value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setMonth(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setCategory(String value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setCategory(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setImportance(int value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setImportance(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic setDescription(String value) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.setDescription(value);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic fillTask(Task task) {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.fillTask(task);
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic cleanPage() {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.cleanPage();
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   dynamic save() {
-    final _$actionInfo = _$_AddUpdateTaskBaseActionController.startAction();
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
       return super.save();
     } finally {
-      _$_AddUpdateTaskBaseActionController.endAction(_$actionInfo);
+      _$_TaskBaseActionController.endAction(_$actionInfo);
     }
   }
 

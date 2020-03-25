@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:todolist/app/modules/add_update_task/add_update_task_controller.dart';
-import 'package:todolist/app/modules/add_update_task/list_hours_minutes.dart';
-import 'package:todolist/app/modules/add_update_task/list_months_days.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
+import 'package:todolist/app/modules/task/list_hours_minutes.dart';
+import 'package:todolist/app/modules/task/list_months_days.dart';
+import 'package:todolist/app/modules/task/task_controller.dart';
 
 class BlockDateTime extends StatelessWidget {
 
 
-  final AddUpdateTaskController addUpdateTaskController = HomeModule.to.get();
+  final TaskController taskController = HomeModule.to.get();
   final TextStyle textStyle =
       TextStyle(fontSize: 20, color: Colors.black.withOpacity(0.65));
   @override
@@ -47,7 +47,7 @@ class BlockDateTime extends StatelessWidget {
                           Flexible(
                             flex: 1,
                             child: listWheelScrollView(
-                                initial: addUpdateTaskController.getHour(),
+                                initial: taskController.getHour(),
                                 list: ListHoursMinutes.hours,
                                 type: "hour"),
                           ),
@@ -55,7 +55,7 @@ class BlockDateTime extends StatelessWidget {
                           Flexible(
                             flex: 1,
                             child: listWheelScrollView(
-                                initial: addUpdateTaskController.getMinutes(),
+                                initial: taskController.getMinutes(),
                                 list: ListHoursMinutes.minutes,
                                 type: "minutes"),
                           ),
@@ -96,12 +96,12 @@ class BlockDateTime extends StatelessWidget {
                           Flexible(
                             flex: 1,
                             child: listWheelScrollView(
-                              initial: addUpdateTaskController.getDay(),
+                              initial: taskController.getDay(),
                               list: ListMonthsDays.days,
                               type: "day",
                               length: DateTime(
                                       DateTime.now().year,
-                                      int.parse(addUpdateTaskController
+                                      int.parse(taskController
                                               .getMonth()) +
                                           1,
                                       0)
@@ -112,7 +112,7 @@ class BlockDateTime extends StatelessWidget {
                           Flexible(
                             flex: 1,
                             child: listWheelScrollView(
-                              initial: addUpdateTaskController.getMonth(),
+                              initial: taskController.getMonth(),
                               list: ListMonthsDays.months,
                               type: "month",
                             ),
@@ -144,10 +144,10 @@ class BlockDateTime extends StatelessWidget {
       looping: true,
       itemExtent: 45,
       onSelectedItemChanged: (value) {
-        if (type == "hour") addUpdateTaskController.setHour(value);
-        if (type == "minutes") addUpdateTaskController.setMinutes(value);
-        if (type == "day") addUpdateTaskController.setDay(value);
-        if (type == "month") addUpdateTaskController.setMonth(value);
+        if (type == "hour") taskController.setHour(value);
+        if (type == "minutes") taskController.setMinutes(value);
+        if (type == "day") taskController.setDay(value);
+        if (type == "month") taskController.setMonth(value);
       },
       children: List.generate(
         length ?? list.length,

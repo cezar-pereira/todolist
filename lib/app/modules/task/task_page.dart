@@ -2,18 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:todolist/app/modules/add_update_task/Components.dart';
-import 'package:todolist/app/modules/add_update_task/add_update_task_controller.dart';
-import 'package:todolist/app/modules/add_update_task/block_date_time.dart';
 import 'package:todolist/app/modules/category/category_controller.dart';
 import 'package:todolist/app/modules/home/home_module.dart';
+import 'package:todolist/app/modules/task/Components.dart';
+import 'package:todolist/app/modules/task/block_date_time.dart';
+import 'package:todolist/app/modules/task/task_controller.dart';
 import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
-class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
+class TaskPage extends StatelessWidget with ComponentsTask{
   final categoryOrTask;
-  AddUpdateTaskPage({Key key, this.categoryOrTask}) {
+  TaskPage({Key key, this.categoryOrTask}) {
     fillValues();
   }
   final TextEditingController textControllerName = TextEditingController();
@@ -24,18 +24,18 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
   final TextStyle textStyle =
       TextStyle(fontSize: 18, color: Colors.black.withOpacity(0.65));
 
-  final AddUpdateTaskController addUpdateTaskController = HomeModule.to.get();
+  final TaskController taskController = HomeModule.to.get();
 
   fillValues() {
     if (categoryOrTask.runtimeType == Category
       ..runtimeType) {
-      addUpdateTaskController.cleanPage();
-      addUpdateTaskController.setCategory(categoryOrTask.name);
+      taskController.cleanPage();
+      taskController.setCategory(categoryOrTask.name);
     } else if (categoryOrTask.runtimeType == Task
       ..runtimeType) {
       textControllerName.text = categoryOrTask.title;
       textControllerDescription.text = categoryOrTask.description;
-      addUpdateTaskController.fillTask(categoryOrTask);
+      taskController.fillTask(categoryOrTask);
     }
   }
 
@@ -70,12 +70,12 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
                       child: CupertinoTextField(
                         controller: textControllerName,
                         onChanged: (value) =>
-                            addUpdateTaskController.setTitle(value),
+                            taskController.setTitle(value),
                         placeholder: "Nome",
                       ),
                     ),
                     Text(
-                      (addUpdateTaskController.getTitle().length < 5) == true
+                      (taskController.getTitle().length < 5) == true
                           ? 'Nome deve ter pelo menos 5 caracteres'
                           : "",
                       style: TextStyle(color: Colors.red),
@@ -116,13 +116,13 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
                                           (index) {
                                             return GestureDetector(
                                               onTap: () {
-                                                addUpdateTaskController
+                                                taskController
                                                     .setCategory(
                                                         Modular.get<CategoryController>().categories.value[index]
                                                             .name);
                                               },
                                               child: buildItemCategory(
-                                                colorSelected: addUpdateTaskController
+                                                colorSelected: taskController
                                                             .getCategorySelected() ==
                                                         Modular.get<CategoryController>().categories.value[index]
                                                             .name
@@ -157,13 +157,13 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
                                       (index) {
                                         return GestureDetector(
                                           onTap: () {
-                                            addUpdateTaskController
+                                            taskController
                                                 .setImportance(index);
                                           },
                                           child: buildItemPriority(
                                               title: priorities[index]["title"],
                                               color: priorities[index]["color"],
-                                              colorSelected: addUpdateTaskController
+                                              colorSelected: taskController
                                                           .getImportanceSelected() ==
                                                       index
                                                   ? priorities[index]["color"]
@@ -189,7 +189,7 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
                         CupertinoTextField(
                           keyboardType: TextInputType.text,
                           onChanged: (value) =>
-                              addUpdateTaskController.setDescription(value),
+                              taskController.setDescription(value),
                           placeholder: "Descrição",
                           controller: textControllerDescription,
                           maxLength: 255,
@@ -219,7 +219,7 @@ class AddUpdateTaskPage extends StatelessWidget with ComponentsAddUpdateTask {
           onTap: () {
             // Modular.to
             // if (textControllerName.text.length >= 5) {
-            // addUpdateTaskController.save();
+            // taskController.save();
             // }
           },
           child: Text(

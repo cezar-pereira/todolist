@@ -1,13 +1,12 @@
 import 'package:mobx/mobx.dart';
 import 'package:todolist/app/shared/models/task.dart';
 
-part 'add_update_task_controller.g.dart';
+part 'task_controller.g.dart';
 
-class AddUpdateTaskController = _AddUpdateTaskBase
-    with _$AddUpdateTaskController;
+class TaskController = _TaskBase with _$TaskController;
 
-abstract class _AddUpdateTaskBase with Store {
-  @observable
+abstract class _TaskBase with Store {
+   @observable
   String _title = "";
   @observable
   String _hour = "00";
