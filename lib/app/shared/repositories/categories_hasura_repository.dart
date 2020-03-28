@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hasura_connect/hasura_connect.dart';
-import 'package:todolist/app/modules/category/documents/repositories_document.dart';
+import 'package:todolist/app/modules/category/repositories_document_category.dart';
 import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/repositories/categories_repository_interface.dart';
 
@@ -17,7 +17,7 @@ class CategoriesHasuraRepository
 
   @override
   Stream<List<Category>> getCategories() {
-    var snapshot = _hasuraConnect.subscription(getAllRepositoriesSubscription);
+    var snapshot = _hasuraConnect.subscription(getAllCategorysSubscription);
     return snapshot
         .map((data) => Category.fromJsonList(data["data"]["categorys"]));
   }
@@ -44,7 +44,7 @@ class CategoriesHasuraRepository
     var snapshot = await _hasuraConnect
         .query(checkForCategoryQuery, variables: {"name": nameCategory, "id": id});
 
-    if ((snapshot['data']['categorys'] as List).length == 1)
+    if ((snapshot['data']['categorys'] as List).length > 0)
       return true;
     else
       return false;

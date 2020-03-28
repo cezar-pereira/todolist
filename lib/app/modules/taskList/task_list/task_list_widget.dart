@@ -1,14 +1,13 @@
 import 'dart:ui';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/category/category_controller.dart';
 import 'package:todolist/app/modules/category/category_widget.dart';
 import 'package:todolist/app/modules/taskList/task_list/components.dart';
-import 'package:todolist/app/modules/taskList/task_list/task_list_controller.dart';
 import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
@@ -28,11 +27,11 @@ class _TaskListWidgetState extends State<TaskListWidget>
 
   @override
   void initState() {
+    super.initState();
     scrollController = ScrollController()
       ..addListener(() {
         _scrollListener();
       });
-    super.initState();
   }
 
   _scrollListener() {
@@ -58,105 +57,106 @@ class _TaskListWidgetState extends State<TaskListWidget>
     CategoryController categoryController = Modular.get<CategoryController>();
     return Scaffold(
       appBar: MyAppBar(),
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.3),
-                          Colors.black.withOpacity(0.11)
-                        ],
-                      ),
-                      border: BorderDirectional(
-                        bottom: BorderSide(width: 0.5, color: Colors.black38),
-                      ),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              "Categoria:",
-                              style: TextStyle(fontSize: 24),
-                            ),
-                            Text(
-                                "${widget.category.tasks.length} ${widget.category.tasks.length > 1 ? "tarefas" : "tarefa"}"),
+      body: Observer(builder: (_) {
+        return SafeArea(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.3),
+                            Colors.black.withOpacity(0.11)
                           ],
                         ),
-                        Tooltip(
-                          message: widget.category.name,
-                          child: Text(
-                            "${widget.category.name}",
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w300,
-                              letterSpacing: 6,
+                        border: BorderDirectional(
+                          bottom: BorderSide(width: 0.5, color: Colors.black38),
+                        ),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                "Categoria:",
+                                style: TextStyle(fontSize: 24),
+                              ),
+                              Text(
+                                  "${widget.category.tasks.length} ${widget.category.tasks.length > 1 ? "tarefas" : "tarefa"}"),
+                            ],
+                          ),
+                          Tooltip(
+                            message: widget.category.name,
+                            child: Text(
+                              "${widget.category.name}",
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w300,
+                                letterSpacing: 6,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Container(
-                    height: 40 - space,
-                    width: MediaQuery.of(context).size.width,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: widget.category.tasks.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Modular.to.pushNamed("addUpdateTask",
-                                arguments: widget.category.tasks[index]);
-                          },
-                          child: itemTask(task: widget.category.tasks[index]),
-                        );
-                      },
+                    Container(
+                      height: 40 - space,
+                      width: MediaQuery.of(context).size.width,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: widget.category.tasks.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                            onTap: () {
+                              Modular.to.pushNamed("addUpdateTask",
+                                  arguments: widget.category.tasks[index]);
+                            },
+                            child: itemTask(task: widget.category.tasks[index]),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Positioned(
-              top: 60,
-              left: MediaQuery.of(context).size.width - 70,
-              child: Opacity(
-                opacity:
-                    ((space * 2 / 100) > 0) ? (1 - (space * 2.5 / 100)) : 1,
-                child: GestureDetector(
-                  onTap: () {
-                    Modular.to
-                        .pushNamed("addUpdateTask", arguments: widget.category);
-                  },
-                  child: CircleAvatar(
-                    backgroundColor: Theme.of(context).accentColor,
-                    maxRadius: 30,
-                    child: Icon(
-                      Icons.add,
+              Positioned(
+                top: 60,
+                left: MediaQuery.of(context).size.width - 70,
+                child: Opacity(
+                  opacity:
+                      ((space * 2 / 100) > 0) ? (1 - (space * 2.5 / 100)) : 1,
+                  child: GestureDetector(
+                    onTap: () => Modular.to
+                        .pushNamed("addUpdateTask", arguments: widget.category),
+                    child: CircleAvatar(
+                      backgroundColor: Theme.of(context).accentColor,
+                      maxRadius: 30,
+                      child: Icon(
+                        Icons.add,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+        );
+      }),
       bottomNavigationBar: Container(
         height: 60,
         child: Row(

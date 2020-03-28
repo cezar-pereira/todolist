@@ -9,6 +9,23 @@ part of 'task_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TaskController on _TaskBase, Store {
+  final _$_idAtom = Atom(name: '_TaskBase._id');
+
+  @override
+  String get _id {
+    _$_idAtom.context.enforceReadPolicy(_$_idAtom);
+    _$_idAtom.reportObserved();
+    return super._id;
+  }
+
+  @override
+  set _id(String value) {
+    _$_idAtom.context.conditionallyRunInAction(() {
+      super._id = value;
+      _$_idAtom.reportChanged();
+    }, _$_idAtom, name: '${_$_idAtom.name}_set');
+  }
+
   final _$_titleAtom = Atom(name: '_TaskBase._title');
 
   @override
@@ -128,23 +145,21 @@ mixin _$TaskController on _TaskBase, Store {
     }, _$_categoryIdAtom, name: '${_$_categoryIdAtom.name}_set');
   }
 
-  final _$_importanceSelectedAtom = Atom(name: '_TaskBase._importanceSelected');
+  final _$_importanceAtom = Atom(name: '_TaskBase._importance');
 
   @override
-  int get _importanceSelected {
-    _$_importanceSelectedAtom.context
-        .enforceReadPolicy(_$_importanceSelectedAtom);
-    _$_importanceSelectedAtom.reportObserved();
-    return super._importanceSelected;
+  int get _importance {
+    _$_importanceAtom.context.enforceReadPolicy(_$_importanceAtom);
+    _$_importanceAtom.reportObserved();
+    return super._importance;
   }
 
   @override
-  set _importanceSelected(int value) {
-    _$_importanceSelectedAtom.context.conditionallyRunInAction(() {
-      super._importanceSelected = value;
-      _$_importanceSelectedAtom.reportChanged();
-    }, _$_importanceSelectedAtom,
-        name: '${_$_importanceSelectedAtom.name}_set');
+  set _importance(int value) {
+    _$_importanceAtom.context.conditionallyRunInAction(() {
+      super._importance = value;
+      _$_importanceAtom.reportChanged();
+    }, _$_importanceAtom, name: '${_$_importanceAtom.name}_set');
   }
 
   final _$_descriptionAtom = Atom(name: '_TaskBase._description');
@@ -164,6 +179,23 @@ mixin _$TaskController on _TaskBase, Store {
     }, _$_descriptionAtom, name: '${_$_descriptionAtom.name}_set');
   }
 
+  final _$_doneAtom = Atom(name: '_TaskBase._done');
+
+  @override
+  bool get _done {
+    _$_doneAtom.context.enforceReadPolicy(_$_doneAtom);
+    _$_doneAtom.reportObserved();
+    return super._done;
+  }
+
+  @override
+  set _done(bool value) {
+    _$_doneAtom.context.conditionallyRunInAction(() {
+      super._done = value;
+      _$_doneAtom.reportChanged();
+    }, _$_doneAtom, name: '${_$_doneAtom.name}_set');
+  }
+
   final _$_messageErrorAtom = Atom(name: '_TaskBase._messageError');
 
   @override
@@ -179,6 +211,13 @@ mixin _$TaskController on _TaskBase, Store {
       super._messageError = value;
       _$_messageErrorAtom.reportChanged();
     }, _$_messageErrorAtom, name: '${_$_messageErrorAtom.name}_set');
+  }
+
+  final _$saveAsyncAction = AsyncAction('save');
+
+  @override
+  Future<bool> save(dynamic categoryOrTask) {
+    return _$saveAsyncAction.run(() => super.save(categoryOrTask));
   }
 
   final _$_TaskBaseActionController = ActionController(name: '_TaskBase');
@@ -244,6 +283,16 @@ mixin _$TaskController on _TaskBase, Store {
   }
 
   @override
+  dynamic setCategoryId(String value) {
+    final _$actionInfo = _$_TaskBaseActionController.startAction();
+    try {
+      return super.setCategoryId(value);
+    } finally {
+      _$_TaskBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   dynamic setImportance(int value) {
     final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
@@ -274,10 +323,10 @@ mixin _$TaskController on _TaskBase, Store {
   }
 
   @override
-  dynamic fillTask(Task task) {
+  dynamic fillTask(dynamic categoryOrTask) {
     final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
-      return super.fillTask(task);
+      return super.fillTask(categoryOrTask);
     } finally {
       _$_TaskBaseActionController.endAction(_$actionInfo);
     }
@@ -294,10 +343,10 @@ mixin _$TaskController on _TaskBase, Store {
   }
 
   @override
-  dynamic save() {
+  dynamic schedulingIsValid() {
     final _$actionInfo = _$_TaskBaseActionController.startAction();
     try {
-      return super.save();
+      return super.schedulingIsValid();
     } finally {
       _$_TaskBaseActionController.endAction(_$actionInfo);
     }

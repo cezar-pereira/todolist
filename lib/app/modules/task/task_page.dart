@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,15 +8,11 @@ import 'package:todolist/app/modules/home/home_module.dart';
 import 'package:todolist/app/modules/task/Components.dart';
 import 'package:todolist/app/modules/task/block_date_time.dart';
 import 'package:todolist/app/modules/task/task_controller.dart';
-import 'package:todolist/app/shared/models/category.dart';
-import 'package:todolist/app/shared/models/task.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
 class TaskPage extends StatelessWidget with ComponentsTask {
   final categoryOrTask;
-  TaskPage({Key key, this.categoryOrTask}) {
-    fillValues();
-  }
+
   final TextEditingController textControllerName = TextEditingController();
   final TextEditingController textControllerDescription =
       TextEditingController();
@@ -25,19 +22,13 @@ class TaskPage extends StatelessWidget with ComponentsTask {
   final TextStyle textStyle =
       TextStyle(fontSize: 18, color: Colors.black.withOpacity(0.65));
 
-  final TaskController taskController = HomeModule.to.get();
+  TaskController taskController;
 
-  fillValues() {
-    if (categoryOrTask.runtimeType == Category
-      ..runtimeType) {
-      taskController.cleanPage();
-      taskController.setCategory(categoryOrTask.name);
-    } else if (categoryOrTask.runtimeType == Task
-      ..runtimeType) {
-      textControllerName.text = categoryOrTask.title;
-      textControllerDescription.text = categoryOrTask.description;
-      taskController.fillTask(categoryOrTask);
-    }
+  TaskPage({Key key, this.categoryOrTask}) {
+    taskController = HomeModule.to.get();
+    taskController.fillTask(categoryOrTask);
+    textControllerName.text = taskController.getTitle;
+    textControllerDescription.text = taskController.getDescription;
   }
 
   @override
@@ -124,10 +115,16 @@ class TaskPage extends StatelessWidget with ComponentsTask {
                                                         .categories
                                                         .value[index]
                                                         .name);
+                                                taskController.setCategoryId(
+                                                    Modular.get<
+                                                            CategoryController>()
+                                                        .categories
+                                                        .value[index]
+                                                        .name);
                                               },
                                               child: buildItemCategory(
                                                 colorSelected: taskController
-                                                            .getCategorySelected() ==
+                                                            .getCategory ==
                                                         Modular.get<
                                                                 CategoryController>()
                                                             .categories
@@ -173,7 +170,7 @@ class TaskPage extends StatelessWidget with ComponentsTask {
                                               title: priorities[index]["title"],
                                               color: priorities[index]["color"],
                                               colorSelected: taskController
-                                                          .getImportanceSelected() ==
+                                                          .getImportance ==
                                                       index
                                                   ? priorities[index]["color"]
                                                   : Colors.transparent),
@@ -216,32 +213,72 @@ class TaskPage extends StatelessWidget with ComponentsTask {
       ),
       bottomSheet: Container(
         height: 50,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(blurRadius: 5),
           ],
           color: Colors.white,
         ),
-        alignment: Alignment.center,
-        width: MediaQuery.of(context).size.width,
-        child: GestureDetector(
-          onTap: () {
+        child: CupertinoButton(
+          onPressed: () async {
             if (taskController.getTitle.length >= 5) {
+              if (taskController.schedulingIsValid()) {
+                if (await taskController.save(this.categoryOrTask)) {
+                  buildToastNotification(
+                    icon: Icons.done,
+                    color: Colors.green,
+                    text: "Atividade cadastrada!",
+                    align: Alignment.topCenter,
+                  );
+                  // Modular.to.pushNamed("/");
+                  Modular.to.pop();
+                } else {
+                  buildToastNotification(
+                    icon: Icons.close,
+                    color: Colors.red,
+                    text: "Atividade já existe na categoria selecionada.",
+                    align: Alignment.topCenter,
+                  );
+                }
+              } else
+                buildToastNotification(
+                    text: "A data/hora não pode ser anterior ao atual.",
+                    align: Alignment.center,
+                    icon: Icons.warning,
+                    color: Colors.red);
             } else {
               taskController
                   .setMessageError("Nome deve ter pelo menos 5 caracteres");
             }
-            // Modular.to
-            // if (textControllerName.text.length >= 5) {
-            // taskController.save();
-            // }
           },
           child: Text(
-            "ADICIONAR",
-            style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 5),
+            "CONFIRMAR",
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              letterSpacing: 5,
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  buildToastNotification(
+      {Color color,
+      IconData icon,
+      @required String text,
+      @required Alignment align}) {
+    return BotToast.showNotification(
+      duration: Duration(seconds: 2),
+      leading: (_) {
+        return Icon(icon, color: color);
+      },
+      align: align,
+      title: (_) {
+        return Text(text);
+      },
     );
   }
 }

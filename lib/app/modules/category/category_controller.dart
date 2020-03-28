@@ -66,8 +66,7 @@ abstract class _CategoryBase with Store {
 
   @action
   Future<bool> addCategory() async {
-    Category category = Category()
-        .copyWith(name: getNameCategory, codePointIcon: getIconSelected);
+    Category category = Category(name: getNameCategory, codePointIcon: getIconSelected);
     return categoriesHasuraRepository.addCategory(category);
   }
 

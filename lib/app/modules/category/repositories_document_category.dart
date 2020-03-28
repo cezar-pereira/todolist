@@ -1,4 +1,4 @@
-const getAllRepositoriesSubscription = r'''
+const getAllCategorysSubscription = r'''
                                       subscription getAllRepositories {
                                         categorys (order_by: {name: asc}){
                                           id
@@ -12,6 +12,7 @@ const getAllRepositoriesSubscription = r'''
                                             day
                                             month
                                             category
+                                            category_id
                                             importance
                                             description
                                             done

@@ -1,11 +1,20 @@
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+import 'package:todolist/app/modules/category/category_controller.dart';
+import 'package:todolist/app/shared/models/category.dart';
 import 'package:todolist/app/shared/models/task.dart';
+import 'package:todolist/app/shared/repositories/tasks_hasura_repository.dart';
 
 part 'task_controller.g.dart';
 
 class TaskController = _TaskBase with _$TaskController;
 
 abstract class _TaskBase with Store {
+  final TasksHasuraRepository tasksHasuraRepository;
+  _TaskBase(this.tasksHasuraRepository);
+
+  @observable
+  String _id = "";
   @observable
   String _title = "";
   @observable
@@ -21,15 +30,17 @@ abstract class _TaskBase with Store {
   @observable
   String _categoryId;
   @observable
-  int _importanceSelected = 2;
+  int _importance = 2;
   @observable
   String _description = "";
-
+  @observable
+  bool _done;
   @observable
   String _messageError = "";
 
   @action
   setTitle(String value) => this._title = value;
+  String get getTitle => this._title;
 
   @action
   setHour(int value) {
@@ -39,6 +50,8 @@ abstract class _TaskBase with Store {
       this._hour = value.toString();
   }
 
+  getHour() => this._hour;
+
   @action
   setMinutes(int value) {
     if (value < 10)
@@ -47,8 +60,12 @@ abstract class _TaskBase with Store {
       this._minutes = value.toString();
   }
 
+  getMinutes() => this._minutes;
+
   @action
   setDay(int value) => this._day = (value + 1).toString();
+  getDay() => this._day;
+
   @action
   setMonth(int value) {
     if (value < 10)
@@ -57,37 +74,59 @@ abstract class _TaskBase with Store {
       this._month = (value + 1).toString();
   }
 
+  getMonth() => this._month;
+
   @action
   setCategory(String value) => this._category = value;
+  String get getCategory => this._category;
+
   @action
-  setImportance(int value) => this._importanceSelected = value;
+  setCategoryId(String value) {
+    var iterable = Modular.get<CategoryController>().categories.value;
+    for (var category in iterable) {
+      if (category.name == value) {
+        this._categoryId = category.id;
+      }
+    }
+  }
+
+  String get getCategoryId => this._category;
+
+  @action
+  setImportance(int value) => this._importance = value;
+  int get getImportance => this._importance;
+
   @action
   setDescription(String value) => this._description = value;
-
-  String get getTitle => this._title;
-  getImportanceSelected() => this._importanceSelected;
-  getCategorySelected() => this._category;
-
-  getHour() => this._hour;
-  getMinutes() => this._minutes;
-  getDay() => this._day;
-  getMonth() => this._month;
+  String get getDescription => this._description;
 
   @action
   setMessageError(String value) => this._messageError = value;
   String get getMessageError => this._messageError;
 
   @action
-  fillTask(Task task) {
-    this._title = task.title;
-    this._hour = task.hour;
-    this._minutes = task.minutes;
-    this._day = task.day;
-    this._month = task.month;
-    this._category = task.category;
-    this._categoryId = task.categoryId;
-    this._importanceSelected = task.importance;
-    this._description = task.description;
+  fillTask(var categoryOrTask) {
+    if (categoryOrTask.runtimeType == Category
+      ..runtimeType) {
+      this.cleanPage();
+      this.setCategory(categoryOrTask.name);
+      this._categoryId = categoryOrTask.id;
+    } else if (categoryOrTask.runtimeType == Task
+      ..runtimeType) {
+      this.cleanPage();
+      this._id = categoryOrTask.id;
+      this._title = categoryOrTask.title;
+      this.setHour(int.parse(categoryOrTask.hour));
+      this.setMinutes(int.parse(categoryOrTask.minutes));
+      this.setDay(int.parse(categoryOrTask.day) - 1);
+      this.setMonth(int.parse(categoryOrTask.month) - 1);
+      this._category = categoryOrTask.category;
+      this._categoryId = categoryOrTask.categoryId;
+      this._importance = categoryOrTask.importance;
+      this._description = categoryOrTask.description;
+      this._categoryId = categoryOrTask.categoryId;
+      this._done = categoryOrTask.done;
+    }
   }
 
   @action
@@ -100,27 +139,63 @@ abstract class _TaskBase with Store {
     this.setImportance(2);
     this._description = "";
     this._messageError = "";
+    this._categoryId = "";
   }
 
   @action
-  save() {
+  schedulingIsValid() {
+    var dateNow = DateTime.now();
+
+    var chosenDate = DateTime(
+      DateTime.now().year,
+      int.parse(this._month),
+      int.parse(this._day),
+      int.parse(this._hour),
+      int.parse(this._minutes),
+      DateTime.now().second,
+    );
+
+    return dateNow.isBefore(chosenDate);
+  }
+
+  @action
+  Future<bool> save(var categoryOrTask) async {
     Task task = Task(
-        hour: this._hour,
-        minutes: this._minutes,
-        day: this._day,
-        month: this._month,
-        category: getCategorySelected(),
-        categoryId: this._categoryId,
-        importance: getImportanceSelected(),
-        description: this._description,
-        title: this._title);
+      id: this._id,
+      hour: this._hour,
+      minutes: this._minutes,
+      day: this._day,
+      month: this._month,
+      category: getCategory,
+      categoryId: this._categoryId,
+      importance: getImportance,
+      description: this._description,
+      title: this._title,
+      done: this._done,
+    );
+
+    bool result;
+
+    if (categoryOrTask.runtimeType == Category
+      ..runtimeType) {
+      result = await tasksHasuraRepository.addTask(task);
+    } else if (categoryOrTask.runtimeType == Task
+      ..runtimeType) {
+      result = await tasksHasuraRepository.updateTask(task);
+    }
+
     print("Título: ${task.title}");
     print("Hora: ${task.hour}");
     print("Minutos: ${task.minutes}");
     print("Dia: ${task.day}");
     print("Mês: ${task.month}");
     print("Categoria: ${task.category}");
+    print("Categoria id: ${task.categoryId}");
     print("Importancia: ${task.importance}");
     print("Descrição: ${task.description}");
+
+    return result;
+
+    // return false;
   }
 }

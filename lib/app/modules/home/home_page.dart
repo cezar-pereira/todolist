@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget with ComponentsHome {
           if (categoryController.categories.value == null) {
             return Center(child: CircularProgressIndicator());
           }
-
           var listCategories = categoryController.categories.value;
           return Scaffold(
             appBar: MyAppBar(
@@ -111,10 +110,8 @@ class HomePage extends StatelessWidget with ComponentsHome {
                             children:
                                 List.generate(listCategories.length, (index) {
                               return GestureDetector(
-                                onTap: () {
-                                  Modular.to
-                                      .pushNamed("/taskList", arguments: listCategories[index]);
-                                },
+                                onTap: () => Modular.to.pushNamed("/taskList",
+                                    arguments: listCategories[index]),
                                 child: Material(
                                   child: categories(
                                     name: listCategories[index].name,
@@ -147,7 +144,7 @@ class HomePage extends StatelessWidget with ComponentsHome {
                     child: Tooltip(
                       message: "Adicionar categoria",
                       child: GestureDetector(
-                        onTap: () async{
+                        onTap: () async {
                           CategoryWidget().show(context);
                         },
                         child: Icon(Icons.add, size: 25),

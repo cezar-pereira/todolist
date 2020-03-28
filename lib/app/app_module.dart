@@ -9,18 +9,21 @@ import 'package:todolist/app/modules/home/home_module.dart';
 import 'package:todolist/app/modules/task/task_page.dart';
 import 'package:todolist/app/modules/taskList/task_list/task_list_widget.dart';
 import 'package:todolist/app/shared/repositories/categories_hasura_repository.dart';
+import 'package:todolist/app/shared/repositories/tasks_hasura_repository.dart';
 
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => TaskController()),
+        //CONTROLLERSS
+        Bind((i) => TaskController(i.get<TasksHasuraRepository>())),
         Bind((i) => CategoryController(i.get<CategoriesHasuraRepository>())),
         Bind((i) => AppController()),
-        //Other
+        //OTHERS
         Bind((i) =>
             HasuraConnect("https://nano-remember.herokuapp.com/v1/graphql")),
         // REPOSITORIES
         Bind((i) => CategoriesHasuraRepository(i.get<HasuraConnect>())),
+        Bind((i) => TasksHasuraRepository(i.get<HasuraConnect>())),
       ];
 
   @override
