@@ -180,8 +180,7 @@ class _TaskListWidgetState extends State<TaskListWidget>
                                     );
                                   });
                             },
-                            key: Key(categoryController.categories
-                                .value[widget.categoryIndex].tasks[index].id),
+                            key: UniqueKey(),
                             child: GestureDetector(
                               onTap: () {
                                 Modular.to.pushNamed("addUpdateTask",

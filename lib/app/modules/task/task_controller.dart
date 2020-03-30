@@ -181,20 +181,16 @@ abstract class _TaskBase with Store {
       done: this._done,
     );
 
-    task.toString();
+    bool result;
 
-    // bool result;
-
-    // if (categoryOrTask.runtimeType == Category
-    //   ..runtimeType) {
-    //   result = await _tasksHasuraRepository.addTask(task);
-    // } else if (categoryOrTask.runtimeType == Task
-    //   ..runtimeType) {
-    //   result = await _tasksHasuraRepository.updateTask(task);
-    // }
-    // return result;
-
-    return false;
+    if (categoryOrTask.runtimeType == Category
+      ..runtimeType) {
+      result = await _tasksHasuraRepository.addTask(task);
+    } else if (categoryOrTask.runtimeType == Task
+      ..runtimeType) {
+      result = await _tasksHasuraRepository.updateTask(task);
+    }
+    return result;
   }
 
   @action
