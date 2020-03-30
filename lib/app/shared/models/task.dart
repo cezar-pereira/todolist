@@ -85,4 +85,16 @@ class Task {
         "description": description,
         "done": done,
       };
+
+  toString() {
+    print("Título: ${this.title}");
+    print("Hora: ${this.hour}");
+    print("Minutos: ${this.minutes}");
+    print("Dia: ${this.day}");
+    print("Mês: ${this.month}");
+    print("Categoria: ${this.category}");
+    print("Categoria id: ${this.categoryId}");
+    print("Importancia: ${this.importance}");
+    print("Descrição: ${this.description}");
+  }
 }

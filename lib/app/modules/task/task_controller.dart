@@ -64,7 +64,13 @@ abstract class _TaskBase with Store {
   getMinutes() => this._minutes;
 
   @action
-  setDay(int value) => this._day = (value + 1).toString();
+  setDay(int value) {
+    if (value < 10)
+      this._day = "0" + (value + 1).toString();
+    else
+      this._day = (value + 1).toString();
+  }
+
   getDay() => this._day;
 
   @action
@@ -135,8 +141,8 @@ abstract class _TaskBase with Store {
     this._title = "";
     this.setHour(0);
     this.setMinutes(0);
-    this._day = (DateTime.now().day).toString();
-    this._month = (DateTime.now().month).toString();
+    this.setDay(DateTime.now().day - 1);
+    this.setMonth(DateTime.now().month - 1);
     this.setImportance(2);
     this._description = "";
     this._messageError = "";
@@ -175,30 +181,23 @@ abstract class _TaskBase with Store {
       done: this._done,
     );
 
-    bool result;
+    task.toString();
 
-    if (categoryOrTask.runtimeType == Category
-      ..runtimeType) {
-      result = await _tasksHasuraRepository.addTask(task);
-    } else if (categoryOrTask.runtimeType == Task
-      ..runtimeType) {
-      result = await _tasksHasuraRepository.updateTask(task);
-    }
-    return result;
+    // bool result;
 
-    // print("Título: ${task.title}");
-    // print("Hora: ${task.hour}");
-    // print("Minutos: ${task.minutes}");
-    // print("Dia: ${task.day}");
-    // print("Mês: ${task.month}");
-    // print("Categoria: ${task.category}");
-    // print("Categoria id: ${task.categoryId}");
-    // print("Importancia: ${task.importance}");
-    // print("Descrição: ${task.description}");
+    // if (categoryOrTask.runtimeType == Category
+    //   ..runtimeType) {
+    //   result = await _tasksHasuraRepository.addTask(task);
+    // } else if (categoryOrTask.runtimeType == Task
+    //   ..runtimeType) {
+    //   result = await _tasksHasuraRepository.updateTask(task);
+    // }
+    // return result;
 
+    return false;
   }
 
-    @action
+  @action
   Future<bool> deleteTask({@required Task task}) async {
     return await this._tasksHasuraRepository.deleteTask(task);
   }

@@ -33,7 +33,6 @@ class TaskPage extends StatelessWidget with ComponentsTask {
 
   @override
   Widget build(BuildContext context) {
-    
     List<Map> priorities = [
       {"title": "Prioridade#0", "color": Colors.red},
       {"title": "Prioridade#1", "color": Colors.orange},

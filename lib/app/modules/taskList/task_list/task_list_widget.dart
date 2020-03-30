@@ -125,7 +125,6 @@ class _TaskListWidgetState extends State<TaskListWidget>
                             .value[widget.categoryIndex].tasks.length,
                         itemBuilder: (context, index) {
                           return Dismissible(
-
                             background: Container(
                               padding: EdgeInsets.only(left: 12),
                               alignment: Alignment.centerLeft,
