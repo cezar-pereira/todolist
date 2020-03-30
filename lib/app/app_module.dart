@@ -31,7 +31,7 @@ class AppModule extends MainModule {
         Router('/', module: HomeModule()),
         Router('/taskList',
             child: (context, args) => TaskListWidget(
-                  category: args.data,
+                  categoryIndex: args.data,
                 )),
         Router('/addUpdateTask',
             child: (context, args) => TaskPage(categoryOrTask: args.data)),

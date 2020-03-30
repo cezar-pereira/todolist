@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:todolist/app/modules/task/task_controller.dart';
 import 'package:todolist/app/shared/models/task.dart';
 
 class ComponentsTaskList {
@@ -67,7 +69,11 @@ class ComponentsTaskList {
                       Checkbox(
                         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         value: task.done,
-                        onChanged: (value) {},
+                        onChanged: (value) {
+                          task = task.copyWith(done: value);
+                          Modular.get<TaskController>()..fillTask(task);
+                          Modular.get<TaskController>()..save(task);
+                        },
                       ),
                       Expanded(
                         child: Text(

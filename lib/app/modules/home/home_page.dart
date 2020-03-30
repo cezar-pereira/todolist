@@ -4,15 +4,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/app_module.dart';
 import 'package:todolist/app/modules/category/category_controller.dart';
-import 'package:todolist/app/modules/category/category_widget.dart';
-import 'package:todolist/app/modules/home/Components.dart';
+import 'package:todolist/app/modules/home/components.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
 enum settingsOptions { Sair }
 
 class HomePage extends StatelessWidget with ComponentsHome {
   final CategoryController categoryController = AppModule.to.get();
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -100,57 +98,53 @@ class HomePage extends StatelessWidget with ComponentsHome {
                       ),
                       SizedBox(height: 16),
                       Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: GridView.count(
-                            crossAxisSpacing: 12,
-                            mainAxisSpacing: 12,
-                            crossAxisCount:
-                                MediaQuery.of(context).size.width > 600 ? 3 : 2,
-                            children:
-                                List.generate(listCategories.length, (index) {
-                              return GestureDetector(
-                                onTap: () => Modular.to.pushNamed("/taskList",
-                                    arguments: listCategories[index]),
-                                child: Material(
-                                  child: categories(
-                                    name: listCategories[index].name,
-                                    icon: IconData(
-                                        listCategories[index].codePointIcon,
-                                        fontFamily: 'MaterialIcons'),
-                                    amount: listCategories[index].tasks.length,
-                                  ),
-                                ),
-                              );
-                            }),
-                          ),
+                          child: GestureDetector(
+                        onTap: () {
+                          homeController.setEditDeleteIsVisible(false);
+                        },
+                        child: Stack(
+                          children: <Widget>[
+                            Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: GridView.count(
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                                crossAxisCount:
+                                    MediaQuery.of(context).size.width > 600
+                                        ? 3
+                                        : 2,
+                                children: List.generate(listCategories.length,
+                                    (index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Modular.to.pushNamed(
+                                        "/taskList",
+                                        arguments: index);
+                                        homeController.setEditDeleteIsVisible(false);
+                                    },
+                                    child: Material(
+                                      child: categories(
+                                        indexCategory: index,
+                                        context: context,
+                                        name: listCategories[index].name,
+                                        icon: IconData(
+                                            listCategories[index].codePointIcon,
+                                            fontFamily: 'MaterialIcons'),
+                                        amount:
+                                            listCategories[index].tasks.length,
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                      )),
                     ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          blurRadius: 2,
-                          spreadRadius: 3,
-                          color: Colors.black26,
-                        )
-                      ],
-                    ),
-                    width: 80,
-                    height: 50,
-                    child: Tooltip(
-                      message: "Adicionar categoria",
-                      child: GestureDetector(
-                        onTap: () async {
-                          CategoryWidget().show(context);
-                        },
-                        child: Icon(Icons.add, size: 25),
-                      ),
-                    ),
-                  ),
+                  bottomButton(context: context),
                 ],
               ),
             ),
