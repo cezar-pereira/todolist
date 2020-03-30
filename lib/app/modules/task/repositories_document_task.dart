@@ -18,8 +18,8 @@ const checkForTaskQuery = r'''
                                 ''';
 
 const deleteTaskMutation = r'''
-                                mutation deleteCategoryMutatio ($id : uuid){
-                                  delete_categorys(where: {id: {_eq: $id}}) {
+                                mutation deleteTask ($id : uuid){
+                                  delete_tasks(where: {id: {_eq: $id}}) {
                                     affected_rows
                                   }
                                 }

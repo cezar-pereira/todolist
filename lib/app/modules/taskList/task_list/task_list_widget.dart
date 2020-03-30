@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:todolist/app/modules/category/category_controller.dart';
+import 'package:todolist/app/modules/task/task_controller.dart';
 import 'package:todolist/app/modules/taskList/task_list/components.dart';
 import 'package:todolist/app/shared/my_app_bar.dart';
 
@@ -21,6 +22,7 @@ class _TaskListWidgetState extends State<TaskListWidget>
     with ComponentsTaskList {
   ScrollController scrollController;
   CategoryController categoryController;
+  TaskController taskController;
   double space = 0;
 
   @override
@@ -31,6 +33,7 @@ class _TaskListWidgetState extends State<TaskListWidget>
         _scrollListener();
       });
     categoryController = Modular.get<CategoryController>();
+    taskController = Modular.get<TaskController>();
   }
 
   _scrollListener() {
@@ -121,17 +124,79 @@ class _TaskListWidgetState extends State<TaskListWidget>
                         itemCount: categoryController.categories
                             .value[widget.categoryIndex].tasks.length,
                         itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Modular.to.pushNamed("addUpdateTask",
-                                  arguments: categoryController
+                          return Dismissible(
+
+                            background: Container(
+                              padding: EdgeInsets.only(left: 12),
+                              alignment: Alignment.centerLeft,
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.red,
+                                size: 30,
+                              ),
+                            ),
+                            direction: DismissDirection.startToEnd,
+                            confirmDismiss: (DismissDirection direction) async {
+                              return showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: const Text("Confirmação"),
+                                      content: RichText(
+                                        text: TextSpan(
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18),
+                                            children: <TextSpan>[
+                                              TextSpan(
+                                                  text:
+                                                      "Tem certeza que deseja deletar a atividade "),
+                                              TextSpan(
+                                                  text:
+                                                      "${categoryController.categories.value[widget.categoryIndex].tasks[index].title}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              TextSpan(text: "?"),
+                                            ]),
+                                      ),
+                                      actions: <Widget>[
+                                        FlatButton(
+                                            onPressed: () {
+                                              taskController.deleteTask(
+                                                  task: categoryController
+                                                      .categories
+                                                      .value[
+                                                          widget.categoryIndex]
+                                                      .tasks[index]);
+                                              Navigator.of(context).pop(true);
+                                            },
+                                            child: const Text("CONFIRMAR")),
+                                        FlatButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(false),
+                                          child: const Text("CANCELAR"),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            },
+                            key: Key(categoryController.categories
+                                .value[widget.categoryIndex].tasks[index].id),
+                            child: GestureDetector(
+                              onTap: () {
+                                Modular.to.pushNamed("addUpdateTask",
+                                    arguments: categoryController
+                                        .categories
+                                        .value[widget.categoryIndex]
+                                        .tasks[index]);
+                              },
+                              child: itemTask(
+                                  task: categoryController
                                       .categories
                                       .value[widget.categoryIndex]
-                                      .tasks[index]);
-                            },
-                            child: itemTask(
-                                task: categoryController.categories
-                                    .value[widget.categoryIndex].tasks[index]),
+                                      .tasks[index]),
+                            ),
                           );
                         },
                       ),
@@ -163,7 +228,6 @@ class _TaskListWidgetState extends State<TaskListWidget>
           ),
         );
       }),
-
     );
   }
 }

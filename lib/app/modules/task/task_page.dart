@@ -232,7 +232,6 @@ class TaskPage extends StatelessWidget with ComponentsTask {
                     text: "Atividade cadastrada!",
                     align: Alignment.topCenter,
                   );
-                  // Modular.to.pushNamed("/");
                   Modular.to.pop();
                 } else {
                   buildToastNotification(

@@ -49,7 +49,19 @@ class TasksHasuraRepository with Disposable, TasksRepositoryInterface {
 
   @override
   Future<bool> deleteTask(Task task) async {
-    return true;
+    try {
+      var snapshot =
+          await _hasuraConnect.mutation(deleteTaskMutation, variables: {
+        "id": task.id,
+      });
+      if (snapshot['data']['delete_tasks']['affected_rows'] == 1)
+        return true;
+      else
+        return false;
+    } catch (e) {
+      print("deleteTask ERROR: $e");
+      return true;
+    }
   }
 
   @override
@@ -86,12 +98,11 @@ class TasksHasuraRepository with Disposable, TasksRepositoryInterface {
   @override
   Future<bool> checkTasksExistenceUpdate({Task task, String idUser}) async {
     try {
-      var snapshot = await _hasuraConnect.query(checkForTaskQuery,
-          variables: {
-            "categoryId": task.categoryId,
-            "taskId": task.id,
-            "taskTitle": task.title
-          });
+      var snapshot = await _hasuraConnect.query(checkForTaskQuery, variables: {
+        "categoryId": task.categoryId,
+        "taskId": task.id,
+        "taskTitle": task.title
+      });
       if ((snapshot['data']['categorys'] as List).length > 0)
         return true;
       else

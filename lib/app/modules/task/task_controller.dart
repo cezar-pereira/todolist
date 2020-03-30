@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:todolist/app/modules/category/category_controller.dart';
@@ -10,8 +11,8 @@ part 'task_controller.g.dart';
 class TaskController = _TaskBase with _$TaskController;
 
 abstract class _TaskBase with Store {
-  final TasksHasuraRepository tasksHasuraRepository;
-  _TaskBase(this.tasksHasuraRepository);
+  final TasksHasuraRepository _tasksHasuraRepository;
+  _TaskBase(this._tasksHasuraRepository);
 
   @observable
   String _id = "";
@@ -178,24 +179,27 @@ abstract class _TaskBase with Store {
 
     if (categoryOrTask.runtimeType == Category
       ..runtimeType) {
-      result = await tasksHasuraRepository.addTask(task);
+      result = await _tasksHasuraRepository.addTask(task);
     } else if (categoryOrTask.runtimeType == Task
       ..runtimeType) {
-      result = await tasksHasuraRepository.updateTask(task);
+      result = await _tasksHasuraRepository.updateTask(task);
     }
-
-    print("Título: ${task.title}");
-    print("Hora: ${task.hour}");
-    print("Minutos: ${task.minutes}");
-    print("Dia: ${task.day}");
-    print("Mês: ${task.month}");
-    print("Categoria: ${task.category}");
-    print("Categoria id: ${task.categoryId}");
-    print("Importancia: ${task.importance}");
-    print("Descrição: ${task.description}");
-
     return result;
 
-    // return false;
+    // print("Título: ${task.title}");
+    // print("Hora: ${task.hour}");
+    // print("Minutos: ${task.minutes}");
+    // print("Dia: ${task.day}");
+    // print("Mês: ${task.month}");
+    // print("Categoria: ${task.category}");
+    // print("Categoria id: ${task.categoryId}");
+    // print("Importancia: ${task.importance}");
+    // print("Descrição: ${task.description}");
+
+  }
+
+    @action
+  Future<bool> deleteTask({@required Task task}) async {
+    return await this._tasksHasuraRepository.deleteTask(task);
   }
 }
